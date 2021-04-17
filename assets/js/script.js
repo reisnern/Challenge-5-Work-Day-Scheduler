@@ -19,3 +19,12 @@ $(saveBtn).on("click", function(){
 
     localStorage.setItem(timeclock, textcontainer);
 })})
+
+//Start Updating for time and all hours
+function updatetime() {
+    var current = moment().hour();
+    $(".timeblocks").changeclass(function() {
+        var hour = parseInt($(pastpresent).attr("id").split("-")[1]);
+        if (hour < current))
+    }
+}
