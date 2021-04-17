@@ -9,3 +9,10 @@ var Save = $(".saveBtn")
 //Keep track of time in milliseconds
 var update = setInterval(updateHour, 3600000)
 
+//Start JQuery 
+$(document).start(function(){
+
+$(saveBtn).on("click, function()"{
+    var hour = $(pastpresent).parent()
+}
+}
