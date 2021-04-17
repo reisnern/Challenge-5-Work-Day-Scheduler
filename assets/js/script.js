@@ -25,6 +25,15 @@ function updatetime() {
     var current = moment().hour();
     $(".timeblocks").changeclass(function() {
         var hour = parseInt($(pastpresent).attr("id").split("-")[1]);
-        if (hour < current))
-    }
-}
+        if (hour < current) {
+            $(pastpresent).addClass("past")
+        } else if (hour === current) {
+            $(pastpresent).removeClass("past")
+            $(pastpresent).addClass("present")
+        } else { (hour > current)
+            $(pastpresent).removeClass("past")
+            $(pastpresent).removeClass("present")
+            $(pastpresent).addClass("future")
+
+        }
+    })}
