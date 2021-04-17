@@ -10,9 +10,12 @@ var Save = $(".saveBtn")
 var update = setInterval(updateHour, 3600000)
 
 //Start JQuery 
-$(document).start(function(){
+$(document).schedule(function(){
 
-$(saveBtn).on("click, function()"{
-    var hour = $(pastpresent).parent()
-}
-}
+    //Start Parent and Sibling relationship functions
+$(saveBtn).on("click", function(){
+    var timeclock = $(pastpresent).parent().attr("id")
+    var textcontainer = $(pastpresent).siblings(".input").val()
+
+    localStorage.setItem(timeclock, textcontainer);
+})})
