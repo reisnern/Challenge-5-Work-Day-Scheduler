@@ -1,54 +1,73 @@
-var currentDay =$("#currentDay")
-//var currentDay = querySelector("#currentDay")
-var today = moment().format("dddd, MMMM Do YYYY h:mm:ss a")
-//Create line three 
-currentDay.append(today)
-var saveBtn = $(".saveBtn")
-//var saveBtn = document.querySelector(".saveBtn")
-var update = setInterval(updatetime, 3600000)
-//Keep track of time in milliseconds
+//Start Time Display
+var Displaytime =$("#currentDay")
+var now = moment().format("dddd, MMMM Do YYYY h:mm:ss a")
 
-$(document).ready(function(){
-//jQuery detects this state of readiness
+Displaytime.text(now);
 
-//Start Parent and Sibling relationship functions
-$(saveBtn).on("click", function(){
-    var time = $(this).parent().attr("id")
-    // pull parent of 9am so no loop is required
-    var textcontainer = $(this).siblings(".input").val()
-    // value from textcontainer, this is the sibling of "timeclock" as well
-    localStorage.setItem(timeclock, textcontainer);
-    //set key, value
-})})
-
-//Start Updating for time and all hours
 function updatetime() {
 
     var current = moment().hour();
     //console.log(current)
-    $(".time-block").each(function() {
-        var hour = parseInt($(this).attr("id").split("-")[1]);
-        if (hour < current) {
-            $(this).addClass("past")
-        } else if (hour === current) {
-            $(this).removeClass("past")
-            $(this).addClass("present")
-        } else { (hour > current)
-            $(this).removeClass("past")
-            $(this).removeClass("present")
-            $(this).addClass("future")
-            //console.log(hour)
-        }
-    })}
 
-$("#9am .input").val(localStorage.getItem("9am"))
-$("#10am .input").val(localStorage.getItem("10am"))
-$("#11am .input").val(localStorage.getItem("11am"))
-$("#12pm .input").val(localStorage.getItem("12pm"))
-$("#1pm .input").val(localStorage.getItem("1pm"))
-$("#2pm .input").val(localStorage.getItem("2pm"))
-$("#3pm .input").val(localStorage.getItem("3pm"))
-$("#4pm .input").val(localStorage.getItem("4pm"))
-$("#5pm .input").val(localStorage.getItem("5pm"))
+    var timeblocks = $(".time-block");
+
+    timeblocks.each(function() {
+
+        var hour = parseInt($(this).attr("id"));
+
+
+        if (current > hour) {
+            $(this).addClass("past");
+            // console.log('Status', '${hour} - Past');
+        } else if (current === hour) {
+            $(this).addClass("present")
+            // console.log('Status', '${hour} - Present')
+        } else {
+            $(this).addClass("future");
+            //console.log('Status', '{hour} - Present');
+        }
+    })
+}
 
 updatetime();
+
+
+    //Save Start
+var saveBtn = $(".saveBtn")
+
+saveBtn.click(function(event) {
+    event.preventDefault();
+
+    var timeblocks = $(this).parent().attr("id");
+    var inputs = $(this).siblings(".input").val().trim();
+
+    localStorage.setItem(timeblocks, JSON.stringify(inputs));
+    //console.log(timeblocks, input);
+
+    var alert = $(".alert");
+    
+    alert.addClass("show");
+    setTimeout(function () {
+        alert.removeClass("show");   
+    }, 1000);
+})
+
+// Start Timeblock Formating
+
+//Start Showing Time Data
+function showtimedata() {
+    var timeblocks = $(".time-block");
+
+    timeblocks.each(function() {
+        // Access input associated with timeblocksid
+        var timeblocksid = $(this).attr("id");
+        var inputs = JSON.parse(localStorage.getItem(timeblocksid));
+
+        if (inputs !== null) {
+            $(this).children(".input").val(input);
+            //console.log(timeblocksid, input);
+        }
+    })
+}
+
+showtimedata();
